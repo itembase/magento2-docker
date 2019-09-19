@@ -22,7 +22,17 @@ where `xx` can be `21`, `22` or `23`. In that folder run the following command:
 
 `docker-compose up -d`
 
-Wait while all containers will be up and running. As soon as all is up and running run the next command:
+Wait while all containers will be up and running. As soon as all is up and running get into the container and increase PHP memory limits with the following commands:
+
+- `docker-compose exec magento bash`
+- `su www-data`
+- `find . -name '.htaccess' -exec sed -i 's/756M/2048M/g' {} +`
+- `find . -name '.user.ini' -exec sed -i 's/756M/2048M/g' {} +`
+- `exit`
+- `service apache2 reload`
+- `exit`
+
+Afetr that install Magento 2 using the following command:
 
 `docker-compose exec magento install-magento`
 
